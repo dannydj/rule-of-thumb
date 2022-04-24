@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { BottomBanner, Header, Navbar, TopBanner } from './components'
+import { BottomBanner, Footer, Header, Navbar, TopBanner } from './components'
 import './css/main.css'
 
 function App() {
@@ -20,6 +20,8 @@ function App() {
           <TopBanner />
           <main role="main"></main>
           <BottomBanner />
+          <hr role="separator" />
+          <Footer />
         </div>
       </body>
     </div>
