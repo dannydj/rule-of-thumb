@@ -35,7 +35,11 @@
 
 .thumb-position {
   position: absolute;
-  top: 50%;
+  top: 41.5%;
+}
+
+.left-separation {
+  margin-left: 12px;
 }
 
 .white-text {
@@ -85,7 +89,6 @@
   border: 1px solid #fff;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.6);
-  margin-left: 12px;
   font-size: 15px;
   width: 107px;
   height: 38px;
@@ -93,4 +96,26 @@
 
 .gauge-bar-container {
   height: 36px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.gauge-bar-container .inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.gauge-bar-container .green {
+  background: rgba(60, 187, 180, 0.6);
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.gauge-bar-container .yellow {
+  background: rgba(249, 173, 29, 0.6);
+  height: 100%;
+  justify-content: flex-end;
 }

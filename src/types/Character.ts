@@ -4,4 +4,8 @@ export default interface Character {
   category: string
   picture: string
   lastUpdated: Date
+  votes: {
+    positive: number
+    negative: number
+  }
 }
