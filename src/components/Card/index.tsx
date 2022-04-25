@@ -1,6 +1,6 @@
 import { formatDistanceStrict } from 'date-fns'
 import { split, startCase, round } from 'lodash'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { thumbsDown, thumbsUp } from '../../assets/img'
 import Character from '../../types/Character'
 import Thumb from '../Thumb'
@@ -8,6 +8,8 @@ import './styles.css'
 
 export default function Card({ character }: { character: Character }): JSX.Element {
   const { name, description, votes, lastUpdated, picture, category } = character
+  const [isThumbsUp, setIsThumbsUp] = useState(false)
+  const [isThumbsDown, setIsThumbsDown] = useState(false)
   const pictureTokens = split(picture, '.')
   const bigImage = `${process.env.PUBLIC_URL}/img/${pictureTokens[0]}@2x.${pictureTokens[1]}`
   const time = formatDistanceStrict(new Date(lastUpdated), new Date(), { addSuffix: true })
@@ -15,9 +17,25 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   const positivePercentage = (votes.positive * 100) / totalVotes
   const negativePercentage = (votes.negative * 100) / totalVotes
 
+  useEffect(() => {
+    if (isThumbsUp) {
+      setIsThumbsDown(false)
+    }
+  }, [isThumbsUp])
+
+  useEffect(() => {
+    if (isThumbsDown) {
+      setIsThumbsUp(false)
+    }
+  }, [isThumbsDown])
+
   const VoteButton = (): JSX.Element => {
+    const handleClick = () => {
+      console.log('vote')
+    }
+
     return (
-      <button className="vote-btn white-text left-separation" onClick={() => console.log('vote')}>
+      <button className="vote-btn white-text left-separation" onClick={isThumbsUp || isThumbsDown ? () => handleClick() : undefined}>
         Vote Now
       </button>
     )
@@ -42,14 +60,14 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
       <div className="image-wrapper">
         <img src={`${process.env.PUBLIC_URL}/img/${picture}`} alt={name} className="background-image" srcSet={`${process.env.PUBLIC_URL}/img/${picture} 750w, ${bigImage} 1440w`} />
       </div>
-      <Thumb className="thumb-position" />
+      <Thumb className="thumb-position" up={positivePercentage >= negativePercentage} />
       <div className="rectangle">
         <div className="white-text name">{name}</div>
         <div className="white-text text-box margin-bottom-12 description">{description}</div>
         <div className="white-text text-box margin-bottom-12 time">{`${time} in ${startCase(category)}`}</div>
         <div className="text-box margin-bottom-12 buttons">
-          <Thumb onClick={() => console.log('t1h')} up />
-          <Thumb onClick={() => console.log('t2h')} className="left-separation" />
+          <Thumb onClick={() => setIsThumbsUp(!isThumbsUp)} up className={isThumbsUp ? 'white-border' : ''} />
+          <Thumb onClick={() => setIsThumbsDown(!isThumbsDown)} className={`left-separation ${isThumbsDown ? 'white-border' : ''}`} />
           <VoteButton />
         </div>
         <div className="gauge-bar-container">

@@ -94,6 +94,10 @@
   height: 38px;
 }
 
+.white-border.icon-button {
+  outline: 2px solid #fff;
+}
+
 .gauge-bar-container {
   height: 36px;
   display: flex;

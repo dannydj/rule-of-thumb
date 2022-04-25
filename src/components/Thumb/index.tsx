@@ -12,7 +12,7 @@ export default function Thumb(props: ComponentProps): JSX.Element {
   const label = `thumbs ${up ? 'up' : 'down'}`
 
   return (
-    <button className={`${className} thumb-container icon-button`} aria-label={label} onClick={onClick ? () => onClick() : undefined}>
+    <button className={`thumb-container icon-button ${className}`} aria-label={label} onClick={onClick ? () => onClick() : undefined}>
       <img src={up ? thumbsUp : thumbsDown} alt={label} className="thumb" />
     </button>
   )
