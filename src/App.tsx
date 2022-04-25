@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { BottomBanner, Footer, Header, Navbar, TopBanner } from './components'
+import { BottomBanner, CardsContainer, Footer, Header, Navbar, TopBanner } from './components'
 import './css/main.css'
 
 function App() {
@@ -18,7 +18,9 @@ function App() {
         <Header />
         <div className="max-centered">
           <TopBanner />
-          <main role="main"></main>
+          <main role="main">
+            <CardsContainer />
+          </main>
           <BottomBanner />
           <hr role="separator" />
           <Footer />
