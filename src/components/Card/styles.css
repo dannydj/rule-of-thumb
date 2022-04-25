@@ -112,10 +112,17 @@
   background: rgba(60, 187, 180, 0.6);
   height: 100%;
   justify-content: flex-start;
+  padding-left: 1rem;
+}
+
+.gauge-bar-container span {
+  padding-left: 0.5rem;
+  font-size: 18px;
 }
 
 .gauge-bar-container .yellow {
   background: rgba(249, 173, 29, 0.6);
   height: 100%;
   justify-content: flex-end;
+  padding-right: 1rem;
 }

@@ -23,6 +23,20 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
     )
   }
 
+  const GaugeBar = ({ percentage, color }: { percentage: number; color: 'green' | 'yellow' }): JSX.Element => {
+    const gauges: { [key: string]: { image: string; thumbType: string } } = {
+      green: { image: thumbsUp, thumbType: 'up' },
+      yellow: { image: thumbsDown, thumbType: 'down' }
+    }
+
+    return (
+      <div className={`white-text inner ${color}`} style={{ width: `${percentage}%` }}>
+        <img src={gauges[color].image} alt={`thumbs ${gauges[color].thumbType}`} className="thumb" />
+        <span>{round(percentage, 2)}%</span>
+      </div>
+    )
+  }
+
   return (
     <div className="content">
       <div className="image-wrapper">
@@ -39,14 +53,8 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
           <VoteButton />
         </div>
         <div className="gauge-bar-container">
-          <div className="white-text inner green" style={{ width: `${positivePercentage}%` }}>
-            <img src={thumbsUp} alt="thumbs up" className="thumb" />
-            {round(positivePercentage, 2)}%
-          </div>
-          <div className="white-text inner yellow" style={{ width: `${negativePercentage}%` }}>
-            <img src={thumbsDown} alt="thumbs down" className="thumb" />
-            {round(negativePercentage, 2)}%
-          </div>
+          <GaugeBar color="green" percentage={positivePercentage} />
+          <GaugeBar color="yellow" percentage={negativePercentage} />
         </div>
       </div>
     </div>
