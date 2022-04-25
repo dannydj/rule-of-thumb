@@ -11,6 +11,8 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   const { name, description, votes, lastUpdated, picture, category } = character
   const [isThumbsUp, setIsThumbsUp] = useState(false)
   const [isThumbsDown, setIsThumbsDown] = useState(false)
+  const [hasVoted, setHasVoted] = useState(false)
+  const [disabled, setDisabled] = useState(true)
   const pictureTokens = split(picture, '.')
   const bigImage = `${process.env.PUBLIC_URL}/img/${pictureTokens[0]}@2x.${pictureTokens[1]}`
   const time = formatDistanceStrict(new Date(lastUpdated), new Date(), { addSuffix: true })
@@ -22,23 +24,33 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   useEffect(() => {
     if (isThumbsUp) {
       setIsThumbsDown(false)
+      setDisabled(false)
     }
   }, [isThumbsUp])
 
   useEffect(() => {
     if (isThumbsDown) {
       setIsThumbsUp(false)
+      setDisabled(false)
     }
   }, [isThumbsDown])
 
   const VoteButton = (): JSX.Element => {
     const handleClick = () => {
+      setIsThumbsDown(false)
+      setIsThumbsUp(false)
+      if (hasVoted) {
+        setHasVoted(false)
+        setDisabled(true)
+        return
+      }
       vote({ character, vote: isThumbsUp ? 'positive' : 'negative' })
+      setHasVoted(true)
     }
 
     return (
-      <button className="vote-btn white-text left-separation" onClick={isThumbsUp || isThumbsDown ? () => handleClick() : undefined}>
-        Vote Now
+      <button className="vote-btn white-text left-separation" onClick={!disabled ? () => handleClick() : undefined}>
+        {hasVoted ? 'Vote Again' : 'Vote Now'}
       </button>
     )
   }
@@ -66,7 +78,7 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
       <div className="rectangle">
         <div className="white-text name">{name}</div>
         <div className="white-text text-box margin-bottom-12 description">{description}</div>
-        <div className="white-text text-box margin-bottom-12 time">{`${time} in ${startCase(category)}`}</div>
+        <div className="white-text text-box margin-bottom-12 time">{hasVoted ? 'Thank you for voting!' : `${time} in ${startCase(category)}`}</div>
         <div className="text-box margin-bottom-12 buttons">
           <Thumb onClick={() => setIsThumbsUp(!isThumbsUp)} up className={isThumbsUp ? 'white-border' : ''} />
           <Thumb onClick={() => setIsThumbsDown(!isThumbsDown)} className={`left-separation ${isThumbsDown ? 'white-border' : ''}`} />
