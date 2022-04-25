@@ -2,6 +2,7 @@ import { formatDistanceStrict } from 'date-fns'
 import { split, startCase, round } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { thumbsDown, thumbsUp } from '../../assets/img'
+import useLocalStorage from '../../hooks/useLocalStorage'
 import Character from '../../types/Character'
 import Thumb from '../Thumb'
 import './styles.css'
@@ -16,6 +17,7 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   const totalVotes = votes.positive + votes.negative
   const positivePercentage = (votes.positive * 100) / totalVotes
   const negativePercentage = (votes.negative * 100) / totalVotes
+  const { vote } = useLocalStorage()
 
   useEffect(() => {
     if (isThumbsUp) {
@@ -31,7 +33,7 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
 
   const VoteButton = (): JSX.Element => {
     const handleClick = () => {
-      console.log('vote')
+      vote({ character, vote: isThumbsUp ? 'positive' : 'negative' })
     }
 
     return (
