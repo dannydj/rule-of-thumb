@@ -3,4 +3,5 @@ export default interface Character {
   description: string
   category: string
   picture: string
+  lastUpdated: Date
 }

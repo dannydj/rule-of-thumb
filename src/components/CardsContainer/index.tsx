@@ -13,7 +13,7 @@ export default function CardsContainer(): JSX.Element {
       <div className="title">Previous Rulings</div>
       <div className="container">
         {map(characters, (character: Character, index: number) => (
-          <Card key={index} />
+          <Card key={index} character={character} />
         ))}
       </div>
     </div>
