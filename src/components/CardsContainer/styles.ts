@@ -2,6 +2,8 @@ import styled from 'styled-components'
 import { triangle } from '../../assets/img'
 import media from '../../helpers/media'
 
+type Props = { viewType: 'list' | 'grid' }
+
 export const TopContent = styled.div`
   padding-bottom: 24px;
   ${media.md} {
@@ -125,12 +127,13 @@ export const Container = styled.div`
   padding-right: 1rem;
   -webkit-overflow-scrolling: touch;
   ${media.md} {
-    flex-direction: column;
+    flex-direction: ${({ viewType }: Props) => (viewType === 'list' ? 'column' : 'row')};
     align-items: flex-start;
     margin-left: 0;
     padding-left: 0;
     margin-right: 0;
     padding-right: 0;
     overflow: hidden;
+    flex-wrap: wrap;
   }
 `

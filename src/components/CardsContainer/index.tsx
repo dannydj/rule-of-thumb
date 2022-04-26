@@ -1,18 +1,29 @@
 import { find, map } from 'lodash'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from 'react-select'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import Character from '../../types/Character'
-import Card from '../Card'
+import Card from '../cards/Card'
+import HorizontalCard from '../cards/HorizontalCard'
 import { Container, TopContent } from './styles'
 
 export default function CardsContainer(): JSX.Element {
   const { currentCharacters } = useLocalStorage()
+  const [isDesktop, setIsDesktop] = useState(false)
   const [selectedView, setSelectedView] = useState<'list' | 'grid'>('list')
   const options = [
     { value: 'list', label: 'List' },
     { value: 'grid', label: 'Grid' }
   ]
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)')
+    const listener = () => setIsDesktop(media.matches)
+    listener()
+    window.addEventListener('resize', listener)
+
+    return () => window.removeEventListener('resize', listener)
+  }, [isDesktop])
 
   return (
     <div>
@@ -27,11 +38,13 @@ export default function CardsContainer(): JSX.Element {
           isSearchable={false}
         />
       </TopContent>
-      <Container>
-        {map(currentCharacters, (character: Character, index: number) => (
-          <Card key={index} character={character} />
-        ))}
+      <Container viewType={selectedView}>
+        {currentCharacters && currentCharacters.length > 0 && <CharactersViewer characters={currentCharacters} isGrid={!isDesktop || selectedView === 'grid'} />}
       </Container>
     </div>
   )
+}
+
+function CharactersViewer({ isGrid, characters }: { isGrid: boolean; characters: Character[] }): JSX.Element {
+  return <>{map(characters, (character: Character, index: number) => (isGrid ? <Card key={index} character={character} /> : <HorizontalCard key={index} character={character} />))}</>
 }

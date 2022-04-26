@@ -1,8 +1,5 @@
-import styled from 'styled-components'
-import { gradient } from '../../assets/img'
-import media from '../../helpers/media'
-
-type Props = { image: string; smallImage: string }
+import styled from 'styled-components';
+import media from '../../../helpers/media';
 
 export const CardContent = styled.div`
   width: 351px;
@@ -14,15 +11,11 @@ export const CardContent = styled.div`
   justify-content: flex-end;
   flex-direction: column;
   overflow: hidden;
-  background: url(${({ image }: Props) => image}) no-repeat;
+  background: url(${({ image }: { image: string }) => image}) no-repeat;
   background-size: contain;
   ${media.md} {
-    max-height: 140px;
-    width: 100%;
-    margin-bottom: 20px;
     margin-right: 0;
-    background: url(${({ smallImage }: Props) => smallImage}) no-repeat;
-    background-size: contain;
+    margin-bottom: 1.5rem;
   }
 
   .white-text {
@@ -37,9 +30,6 @@ export const CardContent = styled.div`
   .thumb-position {
     position: absolute;
     top: 41.5%;
-    ${media.md} {
-      top: 0;
-    }
   }
 `
 
@@ -50,19 +40,6 @@ export const Rectangle = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-direction: column;
-  ${media.md} {
-    margin-left: 2rem;
-    z-index: 0;
-    height: 100%;
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background: url(${gradient}) no-repeat;
-    background-size: 100% 100%;
-    padding-left: 9rem;
-  }
 
   .left-separation {
     margin-left: 1rem;
@@ -88,20 +65,6 @@ export const Name = styled.div`
   font-size: 30px;
   display: flex;
   align-items: flex-end;
-  ${media.md} {
-    font-size: 25px;
-    margin-top: 0.05rem;
-    height: auto;
-    align-items: flex-start;
-    padding-bottom: 1rem;
-    width: 300px;
-
-    span {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-  }
 `
 
 export const Description = styled.div`
@@ -112,24 +75,10 @@ export const Description = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  ${media.md} {
-    height: auto;
-    font-size: 12px;
-    &.text-box {
-      width: 350px;
-    }
-  }
 `
 
 export const Message = styled.div`
   text-align: end;
-  ${media.md} {
-    &.text-box {
-      width: 220px;
-      font-size: 12px;
-      padding-top: 0.5rem;
-    }
-  }
 `
 
 export const Controls = styled.div`
@@ -137,11 +86,6 @@ export const Controls = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  ${media.md} {
-    &.text-box {
-      width: 220px;
-    }
-  }
 `
 
 export const Button = styled.button`
@@ -159,9 +103,6 @@ export const GaugeBarContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  ${media.md} {
-    position: absolute;
-  }
 
   span {
     padding-left: 0.5rem;
