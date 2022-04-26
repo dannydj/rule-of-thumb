@@ -4,7 +4,7 @@ import Select from 'react-select'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import Character from '../../types/Character'
 import Card from '../Card'
-import './styles.css'
+import { Container, TopContent } from './styles'
 
 export default function CardsContainer(): JSX.Element {
   const { currentCharacters } = useLocalStorage()
@@ -16,8 +16,8 @@ export default function CardsContainer(): JSX.Element {
 
   return (
     <div>
-      <div className="title">
-        <div>Previous Rulings</div>
+      <TopContent>
+        <div className="title">Previous Rulings</div>
         <Select
           options={options}
           value={find(options, option => option.value === selectedView)}
@@ -26,12 +26,12 @@ export default function CardsContainer(): JSX.Element {
           classNamePrefix="select"
           isSearchable={false}
         />
-      </div>
-      <div className="container">
+      </TopContent>
+      <Container>
         {map(currentCharacters, (character: Character, index: number) => (
           <Card key={index} character={character} />
         ))}
-      </div>
+      </Container>
     </div>
   )
 }
