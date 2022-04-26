@@ -1,7 +1,7 @@
 import { formatDistanceStrict } from 'date-fns'
 import { startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { retrieveRegularPhoto } from '../../../helpers/characterPhoto'
+import { retrievePhoto } from '../../../helpers/characterPhoto'
 import useLocalStorage from '../../../hooks/useLocalStorage'
 import Character from '../../../types/Character'
 import { calculatePercentage } from '../../../utils/percentage'
@@ -49,7 +49,7 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   }
 
   return (
-    <CardContent image={retrieveRegularPhoto(picture)}>
+    <CardContent image={retrievePhoto({ photo: picture })}>
       <Thumb className="thumb-position" up={positivePercentage >= negativePercentage} />
       <Rectangle>
         <div>

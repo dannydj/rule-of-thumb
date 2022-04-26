@@ -2,10 +2,11 @@ import { split } from 'lodash'
 
 const IMAGES_PATH = `${process.env.PUBLIC_URL}/img/`
 
-export function retrieveRegularPhoto(photo: string) {
-  return `${IMAGES_PATH}${photo}`
-}
-export function retrieveSmallPhoto(photo: string) {
+export function retrievePhoto({ photo, tag }: { photo: string; tag?: string }) {
+  if (!tag) {
+    return `${IMAGES_PATH}${photo}`
+  }
+
   const photoTokens = split(photo, '.')
-  return `${IMAGES_PATH}${photoTokens[0]}@2x.${photoTokens[1]}`
+  return `${IMAGES_PATH}${photoTokens[0]}${tag}${photoTokens[1]}`
 }

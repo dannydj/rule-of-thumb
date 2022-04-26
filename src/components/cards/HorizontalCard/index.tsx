@@ -1,7 +1,7 @@
 import { formatDistanceStrict } from 'date-fns'
 import { startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { retrieveSmallPhoto } from '../../../helpers/characterPhoto'
+import { retrievePhoto } from '../../../helpers/characterPhoto'
 import useLocalStorage from '../../../hooks/useLocalStorage'
 import Character from '../../../types/Character'
 import { calculatePercentage } from '../../../utils/percentage'
@@ -17,7 +17,6 @@ export default function HorizontalCard({ character }: { character: Character }):
   const [disabled, setDisabled] = useState(true)
   const [hasVoted, setHasVoted] = useState(false)
   const time = formatDistanceStrict(new Date(lastUpdated), new Date(), { addSuffix: true })
-  const smallPhoto = retrieveSmallPhoto(picture)
   const totalVotes = votes.positive + votes.negative
   const positivePercentage = calculatePercentage(votes.positive, totalVotes)
   const negativePercentage = calculatePercentage(votes.negative, totalVotes)
@@ -50,7 +49,7 @@ export default function HorizontalCard({ character }: { character: Character }):
   }
 
   return (
-    <CardContent image={smallPhoto}>
+    <CardContent image={retrievePhoto({ photo: picture, tag: '@2x.' })}>
       <Thumb className="thumb-position" up={positivePercentage >= negativePercentage} />
       <Rectangle>
         <div>
