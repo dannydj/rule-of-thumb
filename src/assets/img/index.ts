@@ -1,5 +1,6 @@
 export { default as people2x } from './bg-people.@2x.png'
 export { default as people } from './bg-people.png'
+export { default as gradient } from './gradient.png'
 export { default as popeFrancis2x } from './pope-francis.@2x.png'
 export { default as popeFrancis } from './pope-francis.png'
 export { default as search } from './search.svg'
