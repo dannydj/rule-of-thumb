@@ -1,11 +1,13 @@
 import { formatDistanceStrict } from 'date-fns'
-import { split, startCase, round } from 'lodash'
+import { round, split, startCase } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { thumbsDown, thumbsUp } from '../../assets/img'
 import useLocalStorage from '../../hooks/useLocalStorage'
 import Character from '../../types/Character'
 import Thumb from '../Thumb'
-import './styles.css'
+import { Button, CardContent, Controls, Description, GaugeBarContainer, GaugeBarItem, Message, Name, Rectangle } from './styles'
+
+const IMAGES_PATH = `${process.env.PUBLIC_URL}/img/`
 
 export default function Card({ character }: { character: Character }): JSX.Element {
   const { name, description, votes, lastUpdated, picture, category } = character
@@ -13,13 +15,28 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   const [isThumbsDown, setIsThumbsDown] = useState(false)
   const [hasVoted, setHasVoted] = useState(false)
   const [disabled, setDisabled] = useState(true)
-  const pictureTokens = split(picture, '.')
-  const bigImage = `${process.env.PUBLIC_URL}/img/${pictureTokens[0]}@2x.${pictureTokens[1]}`
   const time = formatDistanceStrict(new Date(lastUpdated), new Date(), { addSuffix: true })
   const totalVotes = votes.positive + votes.negative
   const positivePercentage = (votes.positive * 100) / totalVotes
   const negativePercentage = (votes.negative * 100) / totalVotes
   const { vote } = useLocalStorage()
+  const regularImage = `${IMAGES_PATH}${picture}`
+  const pictureTokens = split(picture, '.')
+  const bigImage = `${IMAGES_PATH}${pictureTokens[0]}@2x.${pictureTokens[1]}`
+  const [characterPhoto, setCharacterPhoto] = useState(regularImage)
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mediaQuery = window.matchMedia('(min-width: 768px)')
+      if (mediaQuery.matches) {
+        setCharacterPhoto(bigImage)
+      }
+      setCharacterPhoto(regularImage)
+    }
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     if (isThumbsUp) {
@@ -49,9 +66,9 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
     }
 
     return (
-      <button className="vote-btn white-text left-separation" onClick={!disabled ? () => handleClick() : undefined}>
+      <Button className="white-text left-separation" onClick={!disabled ? () => handleClick() : undefined}>
         {hasVoted ? 'Vote Again' : 'Vote Now'}
-      </button>
+      </Button>
     )
   }
 
@@ -62,33 +79,30 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
     }
 
     return (
-      <div className={`white-text inner ${color}`} style={{ width: `${percentage}%` }}>
-        <img src={gauges[color].image} alt={`thumbs ${gauges[color].thumbType}`} className="thumb" />
+      <GaugeBarItem className={`white-text ${color}`} percentage={percentage}>
+        <img src={gauges[color].image} alt={`thumbs ${gauges[color].thumbType}`} />
         <span>{round(percentage, 2)}%</span>
-      </div>
+      </GaugeBarItem>
     )
   }
 
   return (
-    <div className="content">
-      <div className="image-wrapper">
-        <img src={`${process.env.PUBLIC_URL}/img/${picture}`} alt={name} className="background-image" srcSet={`${process.env.PUBLIC_URL}/img/${picture} 750w, ${bigImage} 1440w`} />
-      </div>
+    <CardContent backgroundImage={characterPhoto}>
       <Thumb className="thumb-position" up={positivePercentage >= negativePercentage} />
-      <div className="rectangle">
-        <div className="white-text name">{name}</div>
-        <div className="white-text text-box margin-bottom-12 description">{description}</div>
-        <div className="white-text text-box margin-bottom-12 time">{hasVoted ? 'Thank you for voting!' : `${time} in ${startCase(category)}`}</div>
-        <div className="text-box margin-bottom-12 buttons">
+      <Rectangle>
+        <Name className="white-text name">{name}</Name>
+        <Description className="white-text text-box margin-bottom-12">{description}</Description>
+        <Message className="white-text text-box margin-bottom-12">{hasVoted ? 'Thank you for voting!' : `${time} in ${startCase(category)}`}</Message>
+        <Controls className="text-box margin-bottom-12">
           <Thumb onClick={() => setIsThumbsUp(!isThumbsUp)} up className={isThumbsUp ? 'white-border' : ''} />
           <Thumb onClick={() => setIsThumbsDown(!isThumbsDown)} className={`left-separation ${isThumbsDown ? 'white-border' : ''}`} />
           <VoteButton />
-        </div>
-        <div className="gauge-bar-container">
+        </Controls>
+        <GaugeBarContainer>
           <GaugeBar color="green" percentage={positivePercentage} />
           <GaugeBar color="yellow" percentage={negativePercentage} />
-        </div>
-      </div>
-    </div>
+        </GaugeBarContainer>
+      </Rectangle>
+    </CardContent>
   )
 }
