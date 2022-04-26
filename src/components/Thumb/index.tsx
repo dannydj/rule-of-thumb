@@ -1,6 +1,7 @@
 import React from 'react'
 import { thumbsDown, thumbsUp } from '../../assets/img'
-import './styles.css'
+import { ThumbButton } from './styles'
+import './styles.ts'
 
 type ComponentProps = {
   className?: string
@@ -12,8 +13,8 @@ export default function Thumb(props: ComponentProps): JSX.Element {
   const label = `thumbs ${up ? 'up' : 'down'}`
 
   return (
-    <button className={`thumb-container icon-button ${className}`} aria-label={label} onClick={onClick ? () => onClick() : undefined}>
+    <ThumbButton className={`icon-button ${className}`} aria-label={label} onClick={onClick ? () => onClick() : undefined}>
       <img src={up ? thumbsUp : thumbsDown} alt={label} className="thumb" />
-    </button>
+    </ThumbButton>
   )
 }
