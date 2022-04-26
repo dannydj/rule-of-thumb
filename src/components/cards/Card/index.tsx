@@ -16,6 +16,7 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
   const [isThumbsDown, setIsThumbsDown] = useState(false)
   const [hasVoted, setHasVoted] = useState(false)
   const [disabled, setDisabled] = useState(true)
+  const [visible, setVisible] = useState(true)
   const time = formatDistanceStrict(new Date(lastUpdated), new Date(), { addSuffix: true })
   const totalVotes = votes.positive + votes.negative
   const positivePercentage = calculatePercentage(votes.positive, totalVotes)
@@ -42,10 +43,12 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
     if (hasVoted) {
       setHasVoted(false)
       setDisabled(true)
+      setVisible(true)
       return
     }
     vote({ character, vote: isThumbsUp ? 'positive' : 'negative' })
     setHasVoted(true)
+    setVisible(false)
   }
 
   return (
@@ -61,8 +64,12 @@ export default function Card({ character }: { character: Character }): JSX.Eleme
         <div>
           <Message className="white-text text-box margin-bottom-12">{hasVoted ? 'Thank you for voting!' : `${time} in ${startCase(category)}`}</Message>
           <Controls className="text-box margin-bottom-12">
-            <Thumb onClick={() => setIsThumbsUp(!isThumbsUp)} up className={isThumbsUp ? 'white-border' : ''} />
-            <Thumb onClick={() => setIsThumbsDown(!isThumbsDown)} className={`left-separation ${isThumbsDown ? 'white-border' : ''}`} />
+            {visible && (
+              <>
+                <Thumb onClick={() => setIsThumbsUp(!isThumbsUp)} up className={isThumbsUp ? 'white-border' : ''} />
+                <Thumb onClick={() => setIsThumbsDown(!isThumbsDown)} className={`left-separation ${isThumbsDown ? 'white-border' : ''}`} />
+              </>
+            )}
             <VoteButton disabled={disabled} handleClick={handleClick} hasVoted={hasVoted} />
           </Controls>
         </div>
