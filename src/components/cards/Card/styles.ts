@@ -40,6 +40,9 @@ export const Rectangle = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-direction: column;
+  ${media.lg} {
+    padding-left: 2.5rem;
+  }
 
   .left-separation {
     margin-left: 1rem;
@@ -88,15 +91,6 @@ export const Controls = styled.div`
   align-items: center;
 `
 
-export const Button = styled.button`
-  border: 1px solid #fff;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.6);
-  font-size: 15px;
-  width: 107px;
-  height: 38px;
-`
-
 export const GaugeBarContainer = styled.div`
   height: 36px;
   display: flex;
@@ -107,26 +101,5 @@ export const GaugeBarContainer = styled.div`
   span {
     padding-left: 0.5rem;
     font-size: 18px;
-  }
-`
-
-export const GaugeBarItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: ${({ percentage }: { percentage: number }) => percentage}%;
-
-  &.green {
-    background: rgba(60, 187, 180, 0.6);
-    height: 100%;
-    justify-content: flex-start;
-    padding-left: 1rem;
-  }
-
-  &.yellow {
-    background: rgba(249, 173, 29, 0.6);
-    height: 100%;
-    justify-content: flex-end;
-    padding-right: 1rem;
   }
 `

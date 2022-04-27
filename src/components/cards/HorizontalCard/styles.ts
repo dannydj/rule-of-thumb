@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { gradient } from '../../../assets/img'
+import media from '../../../helpers/media'
 
 export const CardContent = styled.div`
-  height: 351px;
+  height: 140px;
   flex: 0 0 auto;
   position: relative;
   display: flex;
@@ -15,6 +16,10 @@ export const CardContent = styled.div`
   margin-right: 0;
   background: url(${({ image }: { image: string }) => image}) no-repeat;
   background-size: contain;
+  ${media.lg} {
+    height: 170px;
+    max-height: 170px;
+  }
 
   .white-text {
     color: #fff;
@@ -43,6 +48,19 @@ export const Rectangle = styled.div`
   background: url(${gradient}) no-repeat;
   background-size: 100% 100%;
   padding-left: 9rem;
+  ${media.lg} {
+    margin-left: 6rem;
+    &>div.data {
+      padding-left: 4.5rem;
+    }
+    &>div.controls {
+      padding-left: 2rem;
+    }
+  }
+  ${media.xl} {
+    margin-left: 0;
+    width: 100%;
+  }
 
   .left-separation {
     margin-left: 1rem;
@@ -70,6 +88,15 @@ export const Name = styled.div`
   align-items: flex-start;
   padding-bottom: 1rem;
   width: 300px;
+  ${media.lg} {
+    margin-top: 1rem;
+    font-size: 36px;
+    width: 425px;
+    padding-bottom: 0.2rem;
+  }
+  ${media.xl} {
+    width: 100%;
+  }
 
   span {
     text-overflow: ellipsis;
@@ -86,8 +113,18 @@ export const Description = styled.div`
   text-overflow: ellipsis;
   height: auto;
   font-size: 12px;
+  ${media.lg} {
+    font-size: 18px;
+  }
+
   &.text-box {
     width: 350px;
+    ${media.lg} {
+      width: 425px;
+    }
+    ${media.xl} {
+      width: 550px;
+    }
   }
 `
 
@@ -97,6 +134,13 @@ export const Message = styled.div`
     width: 220px;
     font-size: 12px;
     padding-top: 0.5rem;
+    ${media.lg} {
+      font-size: 15px;
+      width: 100%;
+    }
+  }
+  ${media.lg} {
+    padding-bottom: 0.5rem;
   }
 `
 
@@ -107,16 +151,10 @@ export const Controls = styled.div`
   align-items: center;
   &.text-box {
     width: 220px;
+    ${media.lg} {
+      width: 260px;
+    }
   }
-`
-
-export const Button = styled.button`
-  border: 1px solid #fff;
-  box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.6);
-  font-size: 15px;
-  width: 107px;
-  height: 38px;
 `
 
 export const GaugeBarContainer = styled.div`
@@ -126,30 +164,15 @@ export const GaugeBarContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   position: absolute;
+  ${media.lg} {
+    height: 50px;
+  }
 
   span {
     padding-left: 0.5rem;
     font-size: 18px;
-  }
-`
-
-export const GaugeBarItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: ${({ percentage }: { percentage: number }) => percentage}%;
-
-  &.green {
-    background: rgba(60, 187, 180, 0.6);
-    height: 100%;
-    justify-content: flex-start;
-    padding-left: 1rem;
-  }
-
-  &.yellow {
-    background: rgba(249, 173, 29, 0.6);
-    height: 100%;
-    justify-content: flex-end;
-    padding-right: 1rem;
+    ${media.lg} {
+      font-size: 24px;
+    }
   }
 `

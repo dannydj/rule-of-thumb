@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import media from "../../../helpers/media";
 
 export const GaugeBarItem = styled.div`
   display: flex;
@@ -18,5 +19,11 @@ export const GaugeBarItem = styled.div`
     height: 100%;
     justify-content: flex-end;
     padding-right: 1rem;
+  }
+
+  ${media.lg} {
+    img {
+      height: 24px;
+    }
   }
 `

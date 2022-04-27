@@ -65,13 +65,13 @@ export default function HorizontalCard({ character }: { character: Character }):
     <CardContent image={retrievePhoto({ photo: picture, tag: isWideScreen ? '@3x.' : '@2x.' })}>
       <Thumb className="thumb-position" up={positivePercentage >= negativePercentage} />
       <Rectangle>
-        <div>
+        <div className="data">
           <Name className="white-text name">
             <span>{name}</span>
           </Name>
           <Description className="white-text text-box margin-bottom-12">{description}</Description>
         </div>
-        <div>
+        <div className="controls">
           <Message className="white-text text-box margin-bottom-12">{hasVoted ? 'Thank you for voting!' : `${time} in ${startCase(category)}`}</Message>
           <Controls className="text-box margin-bottom-12">
             {visible && (
